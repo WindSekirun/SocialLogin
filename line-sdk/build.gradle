@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('line-sdk-4.0.5.aar'))

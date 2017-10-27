@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('naver_login_library_4.1.4.jar'))
