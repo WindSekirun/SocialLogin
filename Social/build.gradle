@@ -9,6 +9,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -46,4 +47,6 @@ dependencies {
     implementation project(':line-sdk')
     // Naver SDK
     implementation project(':naver-sdk')
+    // multidex
+    implementation 'com.android.support:multidex:1.0.1'
 }
