@@ -82,27 +82,30 @@ public class FacebookLogin extends SocialLogin {
     }
 
     private void getUserInfo(LoginResult result) {
-        GraphRequest.GraphJSONObjectCallback callback = (object, response) -> {
-            if (object == null) {
-                responseListener.onResult(SocialType.FACEBOOK, ResultType.FAILURE, null);
-                return;
+        GraphRequest.GraphJSONObjectCallback callback = new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                if (object == null) {
+                    responseListener.onResult(SocialType.FACEBOOK, ResultType.FAILURE, null);
+                    return;
+                }
+
+                String id = RichUtils.getJSONString(object, "id");
+                String name = RichUtils.getJSONString(object, "name");
+                String email = RichUtils.getJSONString(object, "email");
+                String gender = RichUtils.getJSONString(object, "gender");
+                JSONObject data = RichUtils.getJSONObject(RichUtils.getJSONObject(object, "picture"), "data");
+                String profilePicture = RichUtils.getJSONString(data, "url");
+
+                Map<UserInfoType, String> userInfoMap = new HashMap<>();
+                userInfoMap.put(UserInfoType.ID, id);
+                userInfoMap.put(UserInfoType.NAME, name);
+                userInfoMap.put(UserInfoType.EMAIL, email);
+                userInfoMap.put(UserInfoType.PROFILE_PICTRUE, profilePicture);
+                userInfoMap.put(UserInfoType.GENDER, gender);
+
+                responseListener.onResult(SocialType.FACEBOOK, ResultType.SUCCESS, userInfoMap);
             }
-
-            String id = RichUtils.getJSONString(object, "id");
-            String name = RichUtils.getJSONString(object, "name");
-            String email = RichUtils.getJSONString(object, "email");
-            String gender = RichUtils.getJSONString(object, "gender");
-            JSONObject data = RichUtils.getJSONObject(RichUtils.getJSONObject(object, "picture"), "data");
-            String profilePicture = RichUtils.getJSONString(data, "url");
-
-            Map<UserInfoType, String> userInfoMap = new HashMap<>();
-            userInfoMap.put(UserInfoType.ID, id);
-            userInfoMap.put(UserInfoType.NAME, name);
-            userInfoMap.put(UserInfoType.EMAIL, email);
-            userInfoMap.put(UserInfoType.PROFILE_PICTRUE, profilePicture);
-            userInfoMap.put(UserInfoType.GENDER, gender);
-
-            responseListener.onResult(SocialType.FACEBOOK, ResultType.SUCCESS, userInfoMap);
         };
 
         GraphRequest request = GraphRequest.newMeRequest(result.getAccessToken(), callback);
