@@ -1,12 +1,14 @@
 package pyxis.uzuki.live.sociallogin.google;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.HashMap;
@@ -42,7 +44,11 @@ public class GoogleLogin extends SocialLogin {
         GoogleSignInOptions gso = builder.build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage(activity, connectionResult -> {
+                .enableAutoManage(activity, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+                    }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();

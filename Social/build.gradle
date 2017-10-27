@@ -1,11 +1,9 @@
 apply plugin: 'com.android.library'
 
-apply plugin: 'kotlin-android'
-
 android {
     compileSdkVersion 26
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -16,36 +14,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // appcompat
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     // RichUtils
     implementation 'com.github.WindSekirun:RichUtilsKt:1.8.0'
-    // Stream API
-    implementation 'com.annimon:stream:1.1.9'
     // Timber
     implementation 'com.jakewharton.timber:timber:4.5.1'
     // OKHTTP
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     // KAKAO SDK
-    implementation 'com.kakao.sdk:usermgmt:1.5.1'
+    api 'com.kakao.sdk:usermgmt:1.5.1'
     // Facebook SDK
-    implementation 'com.facebook.android:facebook-android-sdk:4.23.0'
+    api 'com.facebook.android:facebook-android-sdk:4.23.0'
     // Twitter SDK
-    implementation 'com.twitter.sdk.android:twitter:3.1.0'
+    api 'com.twitter.sdk.android:twitter:3.1.0'
     // GOOGLE SDK
-    implementation 'com.google.android.gms:play-services-auth:10.2.6'
+    api 'com.google.android.gms:play-services-auth:10.2.6'
     // Line SDK
-    implementation project(':line-sdk')
+    api project(':line-sdk')
     // Naver SDK
-    implementation project(':naver-sdk')
+    api project(':naver-sdk')
 }
