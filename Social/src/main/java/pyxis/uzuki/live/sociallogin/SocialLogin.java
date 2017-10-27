@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.annimon.stream.Stream;
 import com.facebook.FacebookSdk;
 import com.kakao.auth.KakaoSDK;
 import com.twitter.sdk.android.core.Twitter;
@@ -14,10 +13,10 @@ import java.util.List;
 
 import pyxis.uzuki.live.sociallogin.facebook.FacebookConfig;
 import pyxis.uzuki.live.sociallogin.impl.OnResponseListener;
-import pyxis.uzuki.live.sociallogin.impl.SocialType;
-import pyxis.uzuki.live.sociallogin.kakao.KakaoSDKAdapter;
 import pyxis.uzuki.live.sociallogin.impl.SocialConfig;
 import pyxis.uzuki.live.sociallogin.impl.SocialLoginType;
+import pyxis.uzuki.live.sociallogin.impl.SocialType;
+import pyxis.uzuki.live.sociallogin.kakao.KakaoSDKAdapter;
 import pyxis.uzuki.live.sociallogin.twitter.TwitterConfig;
 
 /**
@@ -65,11 +64,18 @@ public abstract class SocialLogin {
     }
 
     protected static SocialConfig getConfig(SocialType type) {
-        return Stream.of(availableList)
-                .filter(value -> value.getType() == type)
-                .findSingle()
-                .get()
-                .getConfig();
+        SocialLoginType loginType = null;
+        for (SocialLoginType value : availableList) {
+            if (value.getType() == type) {
+                loginType = value;
+                break;
+            }
+        }
+
+        if (loginType == null)
+            return null;
+
+        return loginType.getConfig();
     }
 
     private static void initializeKakaoSDK(Context context) {
