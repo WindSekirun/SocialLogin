@@ -5,13 +5,21 @@
 
 ## 사용 방법
 
-~~jitpack 사용~~
-사유는 알 수 없으나 NoClassNotFound 에러가 발생합니다. 따라서 아래의 방법을 참조해서 사용해주세요.
+*rootProject/build.gradle*
+```	
+allprojects {
+    repositories {
+	    maven { url 'https://jitpack.io' }
+    }
+}
+```
 
-1. git clone https://github.com/WindSekirun/SocialLogin.git
-2. Android Studio 내부 안 File -> New -> Import Module 로 프로젝트 폴더 내 Social 모듈을 불러옴
-3. line-sdk, naver-sdk 도 필요한 모듈이므로 Finish를 누릅니다.
-4. Gradle sync가 끝나면 적용할 모듈의 build.gradle에 들어가서 implementation project(':Social') 를 넣습니다.
+*app/build.gradle*
+```
+dependencies {
+    implementation 'com.github.WindSekirun:SocialLogin:1.0.0'
+}
+```
 
 ## 사용 가이드
 
@@ -65,6 +73,18 @@ public enum UserInfoType { // 유저 정보 필드 (전부 다 나오는 것은 
 
 ### 카카오 로그인
 
+### Dependencies 추가
+
+```
+repositories {
+    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
+}
+```
+
+```
+  implementation 'com.kakao.sdk:usermgmt:1.5.1'
+```
+
 #### AndroidManifest.xml 에 API 키 추가
 ```XML
  <meta-data
@@ -93,6 +113,11 @@ private KakaoLogin kakaoModule;
 
 ### 페이스북 로그인
 
+#### Dependencies 추가
+```
+   implementation 'com.facebook.android:facebook-android-sdk:4.23.0'
+```
+
 #### AndroidManifest.xml 에 액티비티 추가
 ```Java
 <activity
@@ -120,6 +145,15 @@ private FacebookLogin facebookModule;
 
 ### 네이버 로그인
 
+### 파일 다운로드
+[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/raw/master/naver_login_library_4.1.4.jar)
+
+위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
+
+```
+implementation files('libs/naver_login_library_4.1.4.jar')
+```
+
 #### Application 내부에 추가
 ```Java
 List<SocialLoginType> typeList = new ArrayList<>();
@@ -139,6 +173,24 @@ private NaverLogin naverModule;
 ```
 
 ### 라인 로그인
+
+### 파일 다운로드
+[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/raw/master/line-sdk-4.0.5.aar)
+
+위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
+
+```
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+```
+
+```
+implementation(name: 'line-sdk-4.0.5', ext: 'aar')
+```
+
 #### Application 내부에 추가
 ```Java
 List<SocialLoginType> typeList = new ArrayList<>();
@@ -156,6 +208,12 @@ private LineLogin lineModule;
 ```
 
 ### 트위터 로그인
+
+#### Dependencies 추가
+```
+    implementation 'com.twitter.sdk.android:twitter:3.1.0'
+```
+
 #### Application 내부에 추가
 ```Java
 List<SocialLoginType> typeList = new ArrayList<>();
@@ -174,8 +232,14 @@ private TwitterLogin twitterModule;
 ```
 
 ### 구글 로그인
+
 #### 선 작업
 [Google Sign-in for Android](https://developers.google.com/identity/sign-in/android/start) 의 2번 Get a configuration file 를 참조하여 google-services.json 을 모듈 내에 포함시켜야 합니다.
+
+#### Dependencies 추가
+```
+    implementation 'com.google.android.gms:play-services-auth:10.2.6'
+```
 
 #### Application 내부에 추가
 ```Java
