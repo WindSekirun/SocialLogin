@@ -16,6 +16,14 @@ android {
     }
 }
 
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // RichUtils
@@ -25,15 +33,15 @@ dependencies {
     // OKHTTP
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     // KAKAO SDK
-    api 'com.kakao.sdk:usermgmt:1.5.1'
+    implementation 'com.kakao.sdk:usermgmt:1.5.1'
     // Facebook SDK
-    api 'com.facebook.android:facebook-android-sdk:4.23.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.23.0'
     // Twitter SDK
-    api 'com.twitter.sdk.android:twitter:3.1.0'
+    implementation 'com.twitter.sdk.android:twitter:3.1.0'
     // GOOGLE SDK
-    api 'com.google.android.gms:play-services-auth:10.2.6'
+    implementation 'com.google.android.gms:play-services-auth:10.2.6'
     // Line SDK
-    api project(':line-sdk')
+    implementation project(':line-sdk')
     // Naver SDK
-    api project(':naver-sdk')
+    implementation project(':naver-sdk')
 }
