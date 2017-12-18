@@ -18,7 +18,7 @@ allprojects {
 *app/build.gradle*
 ```
 dependencies {
-    implementation 'com.github.WindSekirun:SocialLogin:1.1.0'
+    implementation 'com.github.WindSekirun:SocialLogin:1.1.2'
 }
 ```
 
