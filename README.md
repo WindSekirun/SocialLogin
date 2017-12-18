@@ -1,4 +1,4 @@
-## SocialLogin
+## SocialLogin [![](https://jitpack.io/v/WindSekirun/SocialLogin.svg)](https://jitpack.io/#WindSekirun/SocialLogin)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 페이스북, 네이버, 카카오, 라인, 트위터, 구글 총 6개에 대한 빠른 소셜 로그인 통합 기능을 제공합니다.
