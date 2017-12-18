@@ -3,7 +3,7 @@ package pyxis.uzuki.live.sociallogin.kakao;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.TextureView;
+import android.util.Log;
 
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
@@ -22,7 +22,6 @@ import pyxis.uzuki.live.sociallogin.impl.OnResponseListener;
 import pyxis.uzuki.live.sociallogin.impl.ResultType;
 import pyxis.uzuki.live.sociallogin.impl.SocialType;
 import pyxis.uzuki.live.sociallogin.impl.UserInfoType;
-import timber.log.Timber;
 
 /**
  * SocialLogin
@@ -68,7 +67,7 @@ public class KakaoLogin extends SocialLogin {
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
-            Timber.tag("SessionCallback").d("OpenFailed:: %s", exception != null ? exception.getMessage() : "");
+            Log.d("SessionCallback", String.format("OpenFailed:: %s", exception != null ? exception.getMessage() : ""));
         }
     }
 

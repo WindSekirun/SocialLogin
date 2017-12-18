@@ -1,1 +1,1 @@
-include ':Social', ':line-sdk', ':naver-sdk'
+include ':Social'

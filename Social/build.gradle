@@ -25,11 +25,9 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     // RichUtils
     implementation 'com.github.WindSekirun:RichUtilsKt:1.8.0'
-    // Timber
-    implementation 'com.jakewharton.timber:timber:4.5.1'
     // OKHTTP
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     // KAKAO SDK
@@ -40,8 +38,4 @@ dependencies {
     implementation 'com.twitter.sdk.android:twitter:3.1.0'
     // GOOGLE SDK
     implementation 'com.google.android.gms:play-services-auth:10.2.6'
-    // Line SDK
-    implementation project(':line-sdk')
-    // Naver SDK
-    implementation project(':naver-sdk')
 }
