@@ -1,6 +1,7 @@
 package pyxis.uzuki.live.sociallogin;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 
@@ -9,6 +10,7 @@ import com.kakao.auth.KakaoSDK;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,48 +46,104 @@ public abstract class SocialLogin {
 
     public abstract void onDestroy();
 
+    /**
+     * Initialize SocialLogin
+     *
+     * @param context {@link Context} object, it will be Application Context.
+     */
     public static void init(Context context) {
+        if (context instanceof Activity || context instanceof Service) {
+            throw new InvalidParameterException("Context must be Application Context, not Activity, Service Context.");
+        }
+
         mContext = context;
-        availableTypeMap.clear();
+        clear();
     }
 
-    public static void addType(SocialType socialType, SocialConfig socialConfig) {
-        availableTypeMap.put(socialType, socialConfig);
-        switch (socialType) {
-            case KAKAO:
-                initializeKakaoSDK(mContext);
-                break;
-            case TWITTER:
-                initializeTwitterSDK(mContext, (TwitterConfig) socialConfig);
-                break;
-            case FACEBOOK:
-                initializeFacebookSDK(mContext, (FacebookConfig) socialConfig);
-                break;
+    /**
+     * Initialize SocialLogin with pre-configured AvailableTypeMap
+     *
+     * @param context
+     * @param availableTypeMap
+     */
+    public static void init(Context context, Map<SocialType, SocialConfig> availableTypeMap) {
+        if (context instanceof Activity || context instanceof Service) {
+            throw new InvalidParameterException("Context must be Application Context, not Activity, Service Context.");
+        }
+
+        mContext = context;
+
+        if (!availableTypeMap.isEmpty()) {
+            SocialLogin.availableTypeMap = availableTypeMap;
+            initializeSDK();
         }
     }
 
+    /**
+     * add SocialConfig to use
+     *
+     * @param socialType   {@link SocialType} object
+     * @param socialConfig {@link SocialConfig} object
+     */
+    public static void addType(SocialType socialType, SocialConfig socialConfig) {
+        if (mContext == null) {
+            throw new RuntimeException("No context is available, please add context by declare SocialLogin.init(this) in Application class");
+        }
+
+        availableTypeMap.put(socialType, socialConfig);
+        initializeSDK();
+    }
+
+    /**
+     * remove SocialConfig in AvailableTypeMap
+     *
+     * @param socialType {@link SocialType} object
+     */
     public static void removeType(SocialType socialType) {
         availableTypeMap.remove(socialType);
     }
 
+    /**
+     * clear AvailableTypeMap
+     */
+    public static void clear() {
+        availableTypeMap.clear();
+    }
+
     protected static SocialConfig getConfig(SocialType type) {
         if (!availableTypeMap.containsKey(type)) {
-            throw new IllegalStateException(String.format("No config is available, please add proper config :: SocialType -> %s", type.name()));
+            throw new RuntimeException(String.format("No config is available, please add proper config :: SocialType -> %s", type.name()));
         }
         return availableTypeMap.get(type);
     }
 
-    private static void initializeKakaoSDK(Context context) {
-        KakaoSDK.init(new KakaoSDKAdapter(context));
+    private static void initializeSDK() {
+        for (Map.Entry<SocialType, SocialConfig> entry : availableTypeMap.entrySet()) {
+            switch (entry.getKey()) {
+                case KAKAO:
+                    initializeKakaoSDK();
+                    break;
+                case TWITTER:
+                    initializeTwitterSDK((TwitterConfig) entry.getValue());
+                    break;
+                case FACEBOOK:
+                    initializeFacebookSDK((FacebookConfig) entry.getValue());
+                    break;
+            }
+        }
     }
 
-    private static void initializeFacebookSDK(Context context, FacebookConfig config) {
+    private static void initializeKakaoSDK() {
+        KakaoSDK.init(new KakaoSDKAdapter(mContext));
+    }
+
+    private static void initializeFacebookSDK(FacebookConfig config) {
         FacebookSdk.setApplicationId(config.getApplicationId());
-        FacebookSdk.sdkInitialize(context);
+        FacebookSdk.sdkInitialize(mContext);
     }
 
-    private static void initializeTwitterSDK(Context context, TwitterConfig config) {
-        com.twitter.sdk.android.core.TwitterConfig twitterConfig = new com.twitter.sdk.android.core.TwitterConfig.Builder(context)
+    private static void initializeTwitterSDK(TwitterConfig config) {
+        com.twitter.sdk.android.core.TwitterConfig twitterConfig = new com.twitter.sdk.android.core.TwitterConfig.Builder(mContext)
                 .twitterAuthConfig(new TwitterAuthConfig(config.getConsumerKey(), config.getConsumerSecret()))
                 .build();
 
