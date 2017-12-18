@@ -9,12 +9,12 @@ import com.kakao.auth.KakaoSDK;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import pyxis.uzuki.live.sociallogin.facebook.FacebookConfig;
 import pyxis.uzuki.live.sociallogin.impl.OnResponseListener;
 import pyxis.uzuki.live.sociallogin.impl.SocialConfig;
-import pyxis.uzuki.live.sociallogin.impl.SocialLoginType;
 import pyxis.uzuki.live.sociallogin.impl.SocialType;
 import pyxis.uzuki.live.sociallogin.kakao.KakaoSDKAdapter;
 import pyxis.uzuki.live.sociallogin.twitter.TwitterConfig;
@@ -30,7 +30,8 @@ import pyxis.uzuki.live.sociallogin.twitter.TwitterConfig;
 public abstract class SocialLogin {
     protected Activity activity;
     protected OnResponseListener responseListener;
-    private static List<SocialLoginType> availableList;
+    private static Map<SocialType, SocialConfig> availableTypeMap = new HashMap<>();
+    private static Context mContext;
 
     public SocialLogin(Activity activity, OnResponseListener onResponseListener) {
         this.activity = activity;
@@ -43,39 +44,35 @@ public abstract class SocialLogin {
 
     public abstract void onDestroy();
 
-    public static void init(Context context, List<SocialLoginType> availableType) {
-        availableList = availableType;
+    public static void init(Context context) {
+        mContext = context;
+        availableTypeMap.clear();
+    }
 
-        for (SocialLoginType type : availableType) {
-            switch (type.getType()) {
-                case KAKAO:
-                    initializeKakaoSDK(context);
-                    break;
-                case GOOGLE:
-                    break;
-                case TWITTER:
-                    initializeTwitterSDK(context, (TwitterConfig) getConfig(SocialType.TWITTER));
-                    break;
-                case FACEBOOK:
-                    initializeFacebookSDK(context, (FacebookConfig) getConfig(SocialType.FACEBOOK));
-                    break;
-            }
+    public static void addType(SocialType socialType, SocialConfig socialConfig) {
+        availableTypeMap.put(socialType, socialConfig);
+        switch (socialType) {
+            case KAKAO:
+                initializeKakaoSDK(mContext);
+                break;
+            case TWITTER:
+                initializeTwitterSDK(mContext, (TwitterConfig) socialConfig);
+                break;
+            case FACEBOOK:
+                initializeFacebookSDK(mContext, (FacebookConfig) socialConfig);
+                break;
         }
     }
 
+    public static void removeType(SocialType socialType) {
+        availableTypeMap.remove(socialType);
+    }
+
     protected static SocialConfig getConfig(SocialType type) {
-        SocialLoginType loginType = null;
-        for (SocialLoginType value : availableList) {
-            if (value.getType() == type) {
-                loginType = value;
-                break;
-            }
+        if (!availableTypeMap.containsKey(type)) {
+            throw new IllegalStateException(String.format("No config is available, please add proper config :: SocialType -> %s", type.name()));
         }
-
-        if (loginType == null)
-            return null;
-
-        return loginType.getConfig();
+        return availableTypeMap.get(type);
     }
 
     private static void initializeKakaoSDK(Context context) {
