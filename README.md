@@ -9,6 +9,7 @@
 ```	
 allprojects {
     repositories {
+    	    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
 	    maven { url 'https://jitpack.io' }
     }
 }
