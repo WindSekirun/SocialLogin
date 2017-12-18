@@ -146,12 +146,12 @@ private FacebookLogin facebookModule;
 ### 네이버 로그인
 
 ### 파일 다운로드
-[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/raw/master/naver_login_library_4.1.4.jar)
+[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/naver_login_library_4.1.4.jar)
 
 위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
 
 ```
-implementation files('libs/naver_login_library_4.1.4.jar')
+implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
 
 #### Application 내부에 추가
@@ -175,20 +175,12 @@ private NaverLogin naverModule;
 ### 라인 로그인
 
 ### 파일 다운로드
-[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/raw/master/line-sdk-4.0.5.aar)
+[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/line-sdk-4.0.5.aar)
 
 위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
 
 ```
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-```
-
-```
-implementation(name: 'line-sdk-4.0.5', ext: 'aar')
+implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
 
 #### Application 내부에 추가
