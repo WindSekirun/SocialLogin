@@ -17,7 +17,7 @@ allprojects {
 *app/build.gradle*
 ```
 dependencies {
-    implementation 'com.github.WindSekirun:SocialLogin:1.0.0'
+    implementation 'com.github.WindSekirun:SocialLogin:1.1.0'
 }
 ```
 
@@ -95,14 +95,13 @@ repositories {
 #### Application 내부에 추가
 
 ```Java
-List<SocialLoginType> typeList = new ArrayList<>();
 KakaoConfig kakaoConfig = new KakaoConfig.Builder()
                 .setRequireEmail()
                 .setRequireNickname()
                 .build();
-
-typeList.add(new SocialLoginType(SocialType.KAKAO, kakaoConfig));
-SocialLogin.init(this, typeList);
+		
+SocialLogin.init(this);
+SocialLogin.addType(SocialType.KAKAO, kakaoConfig);
 ```
 
 #### 액티비티에서 사용
@@ -128,14 +127,13 @@ private KakaoLogin kakaoModule;
 
 #### Application 내부에 추가
 ```Java
-List<SocialLoginType> typeList = new ArrayList<>();
 FacebookConfig facebookConfig = new FacebookConfig.Builder()
                 .setApplicationId("<YOUR-API-KEY>")
                 .setRequireEmail()
                 .build();
-
-typeList.add(new SocialLoginType(SocialType.FACEBOOK, facebookConfig));
-SocialLogin.init(this, typeList);
+		
+SocialLogin.init(this);
+SocialLogin.addType(SocialType.FACEBOOK, facebookConfig);
 ```
 
 #### 액티비티에서 사용
@@ -156,15 +154,14 @@ implementation files('libs/naver_login_library_4.1.4.jar')
 
 #### Application 내부에 추가
 ```Java
-List<SocialLoginType> typeList = new ArrayList<>();
 NaverConfig naverConfig = new NaverConfig.Builder()
                 .setAuthClientId("<YOUR-API-KEY>")
                 .setAuthClientSecret("<YOUR-API-KEY>")
                 .setClientName(getString(R.string.app_name))
                 .build();
                 
-typeList.add(new SocialLoginType(SocialType.NAVER, naverConfig));
-SocialLogin.init(this, typeList);
+SocialLogin.init(this);
+SocialLogin.addType(SocialType.NAVER, naverConfig);
 ```
 
 #### 액티비티에서 사용
@@ -193,13 +190,12 @@ implementation(name: 'line-sdk-4.0.5', ext: 'aar')
 
 #### Application 내부에 추가
 ```Java
-List<SocialLoginType> typeList = new ArrayList<>();
 LineConfig lineConfig = new LineConfig.Builder()
                 .setChannelId("<YOUR-API-KEY>")
                 .build();
 
-typeList.add(new SocialLoginType(SocialType.LINE, lineConfig));
-SocialLogin.init(this, typeList);
+SocialLogin.init(this);
+SocialLogin.addType(SocialType.LINE, lineConfig);
 ```
 
 #### 액티비티에서 사용
@@ -216,14 +212,13 @@ private LineLogin lineModule;
 
 #### Application 내부에 추가
 ```Java
-List<SocialLoginType> typeList = new ArrayList<>();
 TwitterConfig twitterConfig = new TwitterConfig.Builder()
                 .setConsumerKey("<YOUR-API-KEY>")
                 .setConsumerSecret("<YOUR-API-KEY>")
                 .build();
 
-typeList.add(new SocialLoginType(SocialType.TWITTER, twitterConfig));
-SocialLogin.init(this, typeList);
+SocialLogin.init(this);
+SocialLogin.addType(SocialType.TWITTER, twitterConfig);
 ```
 
 #### 액티비티에서 사용
@@ -243,13 +238,12 @@ private TwitterLogin twitterModule;
 
 #### Application 내부에 추가
 ```Java
-List<SocialLoginType> typeList = new ArrayList<>();
 GoogleConfig googleConfig = new GoogleConfig.Builder()
                 .setRequireEmail()
                 .build();
 
-typeList.add(new SocialLoginType(SocialType.GOOGLE, googleConfig));
-SocialLogin.init(this, typeList);
+SocialLogin.init(this);
+SocialLogin.addType(SocialType.GOOGLE, googleConfig);
 ```
 
 #### 액티비티에서 사용
