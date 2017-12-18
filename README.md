@@ -95,12 +95,12 @@ repositories {
 #### Application 내부에 추가
 
 ```Java
+SocialLogin.init(this);
 KakaoConfig kakaoConfig = new KakaoConfig.Builder()
                 .setRequireEmail()
                 .setRequireNickname()
                 .build();
 		
-SocialLogin.init(this);
 SocialLogin.addType(SocialType.KAKAO, kakaoConfig);
 ```
 
@@ -127,12 +127,13 @@ private KakaoLogin kakaoModule;
 
 #### Application 내부에 추가
 ```Java
+SocialLogin.init(this);
 FacebookConfig facebookConfig = new FacebookConfig.Builder()
                 .setApplicationId("<YOUR-API-KEY>")
                 .setRequireEmail()
                 .build();
 		
-SocialLogin.init(this);
+
 SocialLogin.addType(SocialType.FACEBOOK, facebookConfig);
 ```
 
@@ -154,13 +155,14 @@ implementation files('libs/naver_login_library_4.1.4.jar')
 
 #### Application 내부에 추가
 ```Java
+SocialLogin.init(this);
 NaverConfig naverConfig = new NaverConfig.Builder()
                 .setAuthClientId("<YOUR-API-KEY>")
                 .setAuthClientSecret("<YOUR-API-KEY>")
                 .setClientName(getString(R.string.app_name))
                 .build();
                 
-SocialLogin.init(this);
+
 SocialLogin.addType(SocialType.NAVER, naverConfig);
 ```
 
@@ -190,11 +192,12 @@ implementation(name: 'line-sdk-4.0.5', ext: 'aar')
 
 #### Application 내부에 추가
 ```Java
+SocialLogin.init(this);
 LineConfig lineConfig = new LineConfig.Builder()
                 .setChannelId("<YOUR-API-KEY>")
                 .build();
 
-SocialLogin.init(this);
+
 SocialLogin.addType(SocialType.LINE, lineConfig);
 ```
 
@@ -212,12 +215,13 @@ private LineLogin lineModule;
 
 #### Application 내부에 추가
 ```Java
+SocialLogin.init(this);
 TwitterConfig twitterConfig = new TwitterConfig.Builder()
                 .setConsumerKey("<YOUR-API-KEY>")
                 .setConsumerSecret("<YOUR-API-KEY>")
                 .build();
 
-SocialLogin.init(this);
+
 SocialLogin.addType(SocialType.TWITTER, twitterConfig);
 ```
 
@@ -238,11 +242,12 @@ private TwitterLogin twitterModule;
 
 #### Application 내부에 추가
 ```Java
+SocialLogin.init(this);
 GoogleConfig googleConfig = new GoogleConfig.Builder()
                 .setRequireEmail()
                 .build();
 
-SocialLogin.init(this);
+
 SocialLogin.addType(SocialType.GOOGLE, googleConfig);
 ```
 
