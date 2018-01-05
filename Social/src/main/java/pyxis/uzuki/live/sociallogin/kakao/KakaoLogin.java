@@ -91,12 +91,16 @@ public class KakaoLogin extends SocialLogin {
                 String nickname = !TextUtils.isEmpty(userProfile.getNickname()) ? userProfile.getNickname() : "";
                 String email = userProfile.getEmail();
                 String profilePicture = !TextUtils.isEmpty(userProfile.getProfileImagePath()) ? userProfile.getProfileImagePath() : "";
+                String thumbnailPicture = !TextUtils.isEmpty(userProfile.getThumbnailImagePath()) ? userProfile.getThumbnailImagePath() : "";
+                boolean isEmailVerified = userProfile.getEmailVerified();
 
                 Map<UserInfoType, String> userInfoMap = new HashMap<>();
-                userInfoMap.put(UserInfoType.ID, String.valueOf(userProfile.getId()));
+                userInfoMap.put(UserInfoType.ID, id);
                 userInfoMap.put(UserInfoType.NICKNAME, nickname);
                 userInfoMap.put(UserInfoType.EMAIL, email);
-                userInfoMap.put(UserInfoType.PROFILE_PICTRUE, profilePicture);
+                userInfoMap.put(UserInfoType.PROFILE_PICTURE, profilePicture);
+                userInfoMap.put(UserInfoType.EMAIL_VERIFIED, String.valueOf(isEmailVerified));
+                userInfoMap.put(UserInfoType.THUMBNAIL_IMAGE, thumbnailPicture);
 
                 responseListener.onResult(SocialType.KAKAO, ResultType.SUCCESS, userInfoMap);
             }

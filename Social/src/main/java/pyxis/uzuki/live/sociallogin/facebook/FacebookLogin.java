@@ -101,7 +101,7 @@ public class FacebookLogin extends SocialLogin {
                 userInfoMap.put(UserInfoType.ID, id);
                 userInfoMap.put(UserInfoType.NAME, name);
                 userInfoMap.put(UserInfoType.EMAIL, email);
-                userInfoMap.put(UserInfoType.PROFILE_PICTRUE, profilePicture);
+                userInfoMap.put(UserInfoType.PROFILE_PICTURE, profilePicture);
                 userInfoMap.put(UserInfoType.GENDER, gender);
 
                 responseListener.onResult(SocialType.FACEBOOK, ResultType.SUCCESS, userInfoMap);

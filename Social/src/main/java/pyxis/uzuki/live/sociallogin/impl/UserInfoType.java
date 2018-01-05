@@ -9,5 +9,5 @@ package pyxis.uzuki.live.sociallogin.impl;
  */
 
 public enum UserInfoType {
-    ID, NAME, ACCESS_TOKEN, EMAIL, NICKNAME, PROFILE_PICTRUE, GENDER
+    ID, NAME, ACCESS_TOKEN, EMAIL, NICKNAME, PROFILE_PICTURE, GENDER, THUMBNAIL_IMAGE, EMAIL_VERIFIED
 }

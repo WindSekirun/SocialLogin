@@ -34,6 +34,7 @@ public class KakaoConfig extends SocialConfig implements Serializable {
         private boolean isRequireEmail = false;
         private boolean isRequireNickname = false;
         private boolean isSecureResource = false;
+        private boolean isRequireImage = false;
 
         public Builder setRequireEmail() {
             isRequireEmail = true;
@@ -50,14 +51,25 @@ public class KakaoConfig extends SocialConfig implements Serializable {
             return this;
         }
 
+        public Builder setRequireImage() {
+            isRequireImage = true;
+            return this;
+        }
+
         public KakaoConfig build() {
             ArrayList<String> requestOptions = new ArrayList<>();
             if (isRequireEmail) {
                 requestOptions.add("kaccount_email");
+                requestOptions.add("kaccount_email_verified");
             }
 
             if (isRequireNickname) {
                 requestOptions.add("nickname");
+            }
+
+            if (isRequireImage) {
+                requestOptions.add("profile_image");
+                requestOptions.add("thumbnail_image");
             }
 
             return new KakaoConfig(requestOptions, isSecureResource);
