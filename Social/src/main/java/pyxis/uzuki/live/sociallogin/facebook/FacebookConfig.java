@@ -1,5 +1,7 @@
 package pyxis.uzuki.live.sociallogin.facebook;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 
 import pyxis.uzuki.live.sociallogin.impl.SocialConfig;
@@ -49,6 +51,7 @@ public class FacebookConfig extends SocialConfig {
 
     public static class Builder {
         private boolean isRequireEmail = false;
+        private boolean isRequireFriends = false;
         private boolean requireWritePermissions = false;
         private String applicationId;
 
@@ -67,14 +70,26 @@ public class FacebookConfig extends SocialConfig {
             return this;
         }
 
+        public Builder setRequireFriends() {
+            isRequireFriends = true;
+            return this;
+        }
+
         public FacebookConfig build() {
+            if (TextUtils.isEmpty(applicationId)) {
+                throw new IllegalArgumentException("applicationId is empty.");
+            }
+
             ArrayList<String> requestOptions = new ArrayList<>();
             if (isRequireEmail) {
                 requestOptions.add("email");
             }
 
+            if (isRequireFriends) {
+                requestOptions.add("user_friends");
+            }
+
             requestOptions.add("public_profile");
-            requestOptions.add("user_friends");
             return new FacebookConfig(requestOptions, requireWritePermissions, applicationId);
         }
     }
