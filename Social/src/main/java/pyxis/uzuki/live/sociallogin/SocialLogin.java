@@ -110,6 +110,7 @@ public abstract class SocialLogin {
      */
     public static void clear() {
         availableTypeMap.clear();
+        alreadyInitializedList.clear();
     }
 
     protected static SocialConfig getConfig(SocialType type) {
