@@ -11,6 +11,7 @@ import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public abstract class SocialLogin {
     protected OnResponseListener responseListener;
     private static Map<SocialType, SocialConfig> availableTypeMap = new HashMap<>();
     private static Context mContext;
+    private static ArrayList<SocialType> alreadyInitializedList = new ArrayList<>();
 
     public SocialLogin(Activity activity, OnResponseListener onResponseListener) {
         this.activity = activity;
@@ -108,6 +110,7 @@ public abstract class SocialLogin {
      */
     public static void clear() {
         availableTypeMap.clear();
+        alreadyInitializedList.clear();
     }
 
     protected static SocialConfig getConfig(SocialType type) {
@@ -119,6 +122,11 @@ public abstract class SocialLogin {
 
     private static void initializeSDK() {
         for (Map.Entry<SocialType, SocialConfig> entry : availableTypeMap.entrySet()) {
+            if (alreadyInitializedList.contains(entry.getKey())) {
+                return;
+            }
+
+            alreadyInitializedList.add(entry.getKey());
             switch (entry.getKey()) {
                 case KAKAO:
                     initializeKakaoSDK();
