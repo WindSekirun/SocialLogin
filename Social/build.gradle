@@ -39,3 +39,12 @@ dependencies {
     // GOOGLE SDK
     implementation 'com.google.android.gms:play-services-auth:10.2.6'
 }
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
