@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.view.TextureView;
 
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
@@ -104,13 +103,34 @@ public class NaverLogin extends SocialLogin {
 
             Map<UserInfoType, String> userInfoMap = new HashMap<>();
 
+            /*
+            resultcode	String	Y	API 호출 결과 코드
+            message	String	Y	호출 결과 메시지
+            response/id	String	Y	동일인 식별 정보
+            동일인 식별 정보는 네이버 아이디마다 고유하게 발급되는 값입니다.
+            response/nickname	String	Y	사용자 별명
+            response/name	String	Y	사용자 이름
+            response/email	String	Y	사용자 메일 주소
+            response/gender	String	Y	성별
+                                        - F: 여성
+                                        - M: 남성
+                                        - U: 확인불가
+            response/age	String	Y	사용자 연령대
+            response/birthday	String	Y	사용자 생일(MM-DD 형식)
+            response/profile_image	String	Y	사용자 프로필 사진 URL
+             */
+
             String id = RichUtils.getJSONString(responseObject, "id");
             String name = RichUtils.getJSONString(responseObject, "name");
             String email = RichUtils.getJSONString(responseObject, "email");
+            String nickname = RichUtils.getJSONString(responseObject, "nickname");
+            String profileImage = RichUtils.getJSONString(responseObject, "profile_image");
 
             userInfoMap.put(UserInfoType.ID, id);
             userInfoMap.put(UserInfoType.NAME, name);
             userInfoMap.put(UserInfoType.EMAIL, email);
+            userInfoMap.put(UserInfoType.NICKNAME, nickname);
+            userInfoMap.put(UserInfoType.PROFILE_PICTRUE, profileImage);
 
             responseListener.onResult(SocialType.NAVER, ResultType.SUCCESS, userInfoMap);
         }
