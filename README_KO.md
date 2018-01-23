@@ -3,25 +3,6 @@
 
 페이스북, 네이버, 카카오, 라인, 트위터, 구글 총 6개에 대한 빠른 소셜 로그인 통합 기능을 제공합니다.
 
-## 사용 방법
-
-*rootProject/build.gradle*
-```	
-allprojects {
-    repositories {
-    	    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
-	    maven { url 'https://jitpack.io' }
-    }
-}
-```
-
-*app/build.gradle*
-```
-dependencies {
-    implementation 'com.github.WindSekirun:SocialLogin:1.1.4'
-}
-```
-
 ## 사용 가이드
 
 ### 공통
