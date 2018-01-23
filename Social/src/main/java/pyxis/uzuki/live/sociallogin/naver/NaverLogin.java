@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.view.TextureView;
 
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
@@ -107,10 +106,20 @@ public class NaverLogin extends SocialLogin {
             String id = RichUtils.getJSONString(responseObject, "id");
             String name = RichUtils.getJSONString(responseObject, "name");
             String email = RichUtils.getJSONString(responseObject, "email");
+            String nickname = RichUtils.getJSONString(responseObject, "nickname");
+            String gender = RichUtils.getJSONString(responseObject, "gender");
+            String age = RichUtils.getJSONString(responseObject, "age");
+            String birthday = RichUtils.getJSONString(responseObject, "birthday");
+            String profileImage = RichUtils.getJSONString(responseObject, "profile_image");
 
             userInfoMap.put(UserInfoType.ID, id);
             userInfoMap.put(UserInfoType.NAME, name);
             userInfoMap.put(UserInfoType.EMAIL, email);
+            userInfoMap.put(UserInfoType.NICKNAME, nickname);
+            userInfoMap.put(UserInfoType.GENDER, gender);
+            userInfoMap.put(UserInfoType.PROFILE_PICTURE, profileImage);
+            userInfoMap.put(UserInfoType.AGE, age);
+            userInfoMap.put(UserInfoType.BIRTHDAY, birthday);
 
             responseListener.onResult(SocialType.NAVER, ResultType.SUCCESS, userInfoMap);
         }
