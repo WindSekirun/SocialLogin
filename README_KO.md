@@ -105,6 +105,9 @@ private KakaoLogin kakaoModule;
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+	    
+<meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value=""<YOUR-API-KEY>"/>
 ```
 
 #### Application 내부에 추가
