@@ -1,10 +1,11 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion 16
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -13,6 +14,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -27,17 +32,17 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     // RichUtils
-    implementation 'com.github.WindSekirun:RichUtilsKt:1.8.0'
+    implementation 'com.github.WindSekirun:RichUtilsKt:2.2.5'
     // OKHTTP
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     // KAKAO SDK
     implementation 'com.kakao.sdk:usermgmt:1.5.1'
     // Facebook SDK
-    implementation 'com.facebook.android:facebook-android-sdk:4.23.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.33.0'
     // Twitter SDK
-    implementation 'com.twitter.sdk.android:twitter:3.1.0'
+    implementation 'com.twitter.sdk.android:twitter:3.3.0'
     // GOOGLE SDK
-    implementation 'com.google.android.gms:play-services-auth:10.2.6'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
 }
 
 task sourcesJar(type: Jar) {

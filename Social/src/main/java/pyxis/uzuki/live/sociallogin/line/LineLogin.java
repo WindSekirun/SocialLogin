@@ -47,6 +47,16 @@ public class LineLogin extends SocialLogin {
 
     }
 
+    @Override
+    public void logout() {
+        logout(false);
+    }
+
+    @Override
+    public void logout(boolean clearToken) {
+
+    }
+
     private void onResultLineLogin(Intent data) {
         LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
         switch (result.getResponseCode()) {

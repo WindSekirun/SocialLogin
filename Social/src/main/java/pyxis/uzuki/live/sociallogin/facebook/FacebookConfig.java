@@ -18,6 +18,7 @@ public class FacebookConfig extends SocialConfig {
     private ArrayList<String> requestOptions;
     private boolean requireWritePermissions;
     private boolean behaviorOnCancel;
+    private FacebookImageEnum mImageEnum = FacebookImageEnum.Large;
     private String applicationId;
 
     public FacebookConfig(ArrayList<String> requestOptions, boolean requireWritePermissions, boolean behaviorOnCancel, String applicationId) {
@@ -51,6 +52,10 @@ public class FacebookConfig extends SocialConfig {
         return applicationId;
     }
 
+    public FacebookImageEnum getImageEnum() {
+        return mImageEnum;
+    }
+
     public void setApplicationId(String applicationId) {
         this.applicationId = applicationId;
     }
@@ -61,6 +66,7 @@ public class FacebookConfig extends SocialConfig {
         private boolean requireWritePermissions = false;
         private boolean behaviorOnCancel = false;
         private String applicationId;
+        private FacebookImageEnum imageEnum = FacebookImageEnum.Large;
 
         public Builder setRequireEmail() {
             isRequireEmail = true;
@@ -84,6 +90,11 @@ public class FacebookConfig extends SocialConfig {
 
         public Builder setBehaviorOnCancel() {
             this.behaviorOnCancel = true;
+            return this;
+        }
+
+        public Builder setPictureSize(FacebookImageEnum imageEnum) {
+            this.imageEnum = imageEnum;
             return this;
         }
 

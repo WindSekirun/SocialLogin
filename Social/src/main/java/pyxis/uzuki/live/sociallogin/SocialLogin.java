@@ -48,6 +48,10 @@ public abstract class SocialLogin {
 
     public abstract void onDestroy();
 
+    public abstract void logout();
+
+    public abstract void logout(boolean clearToken);
+
     /**
      * Initialize SocialLogin
      *

@@ -65,4 +65,14 @@ public class TwitterLogin extends SocialLogin {
     public void onDestroy() {
 
     }
+
+    @Override
+    public void logout() {
+        logout(false);
+    }
+
+    @Override
+    public void logout(boolean clearToken) {
+
+    }
 }
