@@ -1,40 +1,19 @@
 ## SocialLogin [![](https://jitpack.io/v/WindSekirun/SocialLogin.svg)](https://jitpack.io/#WindSekirun/SocialLogin)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
-It provides integrated social login feature which have facebook, naver, kakao, line, twitter, google.
+페이스북, 네이버, 카카오, 라인, 트위터, 구글 총 6개에 대한 빠른 소셜 로그인 통합 기능을 제공합니다.
 
-If you are korean, please see this [README](https://github.com/WindSekirun/SocialLogin/blob/master/README_KO.md)
+## 사용 가이드
 
-## Usages
+### 공통
+각각 서비스마다 공통적인 구조를 가지고 있어 복사 & 붙여넣기 만으로도 쉽게 사용이 가능합니다.
 
-*rootProject/build.gradle*
-```	
-allprojects {
-    repositories {
-    	    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
-	    maven { url 'https://jitpack.io' }
-    }
-}
-```
-
-*app/build.gradle*
-```
-dependencies {
-    implementation 'com.github.WindSekirun:SocialLogin:1.1.5'
-}
-```
-
-## Guide
-
-### Common
-It can be copy-paste cause each serivce has same constructure.
-
-#### Declare xxxLogin variables to use
+#### 사용하고자 하는 서비스의 로그인 클래스 변수 선언
 ```Java
 private KakaoLogin kakaoModule;
 ```
 
-#### generate new instance of xxxLogin
+#### 모듈 인스턴스 생성
 ```Java
 kakaoModule = new KakaoLogin(this, new OnResponseListener() {
     @Override
@@ -44,39 +23,39 @@ kakaoModule = new KakaoLogin(this, new OnResponseListener() {
 });
 ```
 
-#### Login
+#### 로그인
 ```Java
 kakaoModule.onLogin();
 ```
 
-#### execute when onDestroy
+#### onDestroy 일 때 실행
 ```Java
 kakaoModule.onDestroy();
 ```
 
-#### execute when onActivityResult
+#### onActivityResult를 상속받아서 실행
 ```Java
 kakaoModule.onActivityResult(requestCode, resultCode, data);
 ```
 
-#### Description of enums
+#### 각 Enum 설명
 ```Java
-public enum SocialType { // type of social providers
+public enum SocialType { // 소셜 서비스 타입
     KAKAO, GOOGLE, FACEBOOK, LINE, NAVER, TWITTER;
 }
 
-public enum ResultType { 
+public enum ResultType { // 성공, 실패, 취소
     SUCCESS, FAILURE, CANCEL;
 }
 
-public enum UserInfoType { // field of information of user.
-    ID, NAME, ACCESS_TOKEN, EMAIL, NICKNAME, PROFILE_PICTRUE, GENDER ...
+public enum UserInfoType { // 유저 정보 필드 (전부 다 나오는 것은 아님)
+    ID, NAME, ACCESS_TOKEN, EMAIL, NICKNAME, PROFILE_PICTRUE, GENDER;
 }
 ```
 
-### Kakao Login
+### 카카오 로그인
 
-### Dependencies
+### Dependencies 추가
 
 ```
 repositories {
@@ -88,14 +67,14 @@ repositories {
   implementation 'com.kakao.sdk:usermgmt:1.5.1'
 ```
 
-#### Add api key to AndroidManifest.xml
+#### AndroidManifest.xml 에 API 키 추가
 ```XML
  <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="<YOUR-API-KEY>"/>
 ```
 
-#### initialize into Application 
+#### Application 내부에 추가
 
 ```Java
 SocialLogin.init(this);
@@ -107,20 +86,20 @@ KakaoConfig kakaoConfig = new KakaoConfig.Builder()
 SocialLogin.addType(SocialType.KAKAO, kakaoConfig);
 ```
 
-#### using in activity
+#### 액티비티에서 사용
 ```Java
 private KakaoLogin kakaoModule;
 ```
 
 
-### Facebook login
+### 페이스북 로그인
 
-#### add dependencies
+#### Dependencies 추가
 ```
    implementation 'com.facebook.android:facebook-android-sdk:4.23.0'
 ```
 
-#### add activity into AndroidManifest.xml
+#### AndroidManifest.xml 에 액티비티 추가
 ```Java
 <activity
             android:name="com.facebook.FacebookActivity"
@@ -131,7 +110,7 @@ private KakaoLogin kakaoModule;
             android:value=""<YOUR-API-KEY>"/>
 ```
 
-#### initialize into Application 
+#### Application 내부에 추가
 ```Java
 SocialLogin.init(this);
 FacebookConfig facebookConfig = new FacebookConfig.Builder()
@@ -143,23 +122,23 @@ FacebookConfig facebookConfig = new FacebookConfig.Builder()
 SocialLogin.addType(SocialType.FACEBOOK, facebookConfig);
 ```
 
-#### using in activity
+#### 액티비티에서 사용
 ```Java
 private FacebookLogin facebookModule;
 ```
 
-### Naver Login
+### 네이버 로그인
 
-### add dependencies
-[Library Jar Download](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/naver_login_library_4.1.4.jar)
+### 파일 다운로드
+[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/naver_login_library_4.1.4.jar)
 
-put this file in /libs
+위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
 
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
 
-#### initialize into Application 
+#### Application 내부에 추가
 ```Java
 SocialLogin.init(this);
 NaverConfig naverConfig = new NaverConfig.Builder()
@@ -172,26 +151,26 @@ NaverConfig naverConfig = new NaverConfig.Builder()
 SocialLogin.addType(SocialType.NAVER, naverConfig);
 ```
 
-#### using in activity
+#### 액티비티에서 사용
 ```Java
 private NaverLogin naverModule;
 ```
 
-#### etc
-* if ```unable to merge dex``` problem is happened, just delete file in libs
+#### 기타
+* 만일 ```unable to merge dex```오류가 난다면 gradle 선언부를 지우면 됩니다.
 
-### Line Login
+### 라인 로그인
 
-### add dependencies
-[Library Jar download](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/line-sdk-4.0.5.aar)
+### 파일 다운로드
+[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/line-sdk-4.0.5.aar)
 
-put this file in /libs
+위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
 
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
 
-#### initialize into Application 
+#### Application 내부에 추가
 ```Java
 SocialLogin.init(this);
 LineConfig lineConfig = new LineConfig.Builder()
@@ -202,19 +181,19 @@ LineConfig lineConfig = new LineConfig.Builder()
 SocialLogin.addType(SocialType.LINE, lineConfig);
 ```
 
-#### using in activity
+#### 액티비티에서 사용
 ```Java
 private LineLogin lineModule;
 ```
 
-### Twitter Login
+### 트위터 로그인
 
-#### add dependencies
+#### Dependencies 추가
 ```
     implementation 'com.twitter.sdk.android:twitter:3.1.0'
 ```
 
-#### initialize into Application 
+#### Application 내부에 추가
 ```Java
 SocialLogin.init(this);
 TwitterConfig twitterConfig = new TwitterConfig.Builder()
@@ -226,22 +205,22 @@ TwitterConfig twitterConfig = new TwitterConfig.Builder()
 SocialLogin.addType(SocialType.TWITTER, twitterConfig);
 ```
 
-#### using in activity
+#### 액티비티에서 사용
 ```Java
 private TwitterLogin twitterModule;
 ```
 
-### Google Login
+### 구글 로그인
 
-#### Pre TODO
-put your google-services.json in app module which can get at [Google Sign-in for Android](https://developers.google.com/identity/sign-in/android/start) 
+#### 선 작업
+[Google Sign-in for Android](https://developers.google.com/identity/sign-in/android/start) 의 2번 Get a configuration file 를 참조하여 google-services.json 을 모듈 내에 포함시켜야 합니다.
 
-#### add dependencies
+#### Dependencies 추가
 ```
-    implementation 'com.google.android.gms:play-services-auth:10.2.6'
+    implementation 'com.google.android.gms:play-services-auth:10.2.6'
 ```
 
-#### initialize into Application 
+#### Application 내부에 추가
 ```Java
 SocialLogin.init(this);
 GoogleConfig googleConfig = new GoogleConfig.Builder()
@@ -252,12 +231,12 @@ GoogleConfig googleConfig = new GoogleConfig.Builder()
 SocialLogin.addType(SocialType.GOOGLE, googleConfig);
 ```
 
-#### using in activity
+#### 액티비티에서 사용
 ```Java
 private GoogleLogin googleModule;
 ```
 
-## License
+## 라이센스
 ```
 Copyright 2017 WindSekirun (DongGil, Seo)
 
