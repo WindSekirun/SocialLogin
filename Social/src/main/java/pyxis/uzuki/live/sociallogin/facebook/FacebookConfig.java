@@ -17,11 +17,13 @@ import pyxis.uzuki.live.sociallogin.impl.SocialConfig;
 public class FacebookConfig extends SocialConfig {
     private ArrayList<String> requestOptions;
     private boolean requireWritePermissions;
+    private boolean behaviorOnCancel;
     private String applicationId;
 
-    private FacebookConfig(ArrayList<String> requestOptions, boolean requireWritePermissions, String applicationId) {
+    public FacebookConfig(ArrayList<String> requestOptions, boolean requireWritePermissions, boolean behaviorOnCancel, String applicationId) {
         this.requestOptions = requestOptions;
         this.requireWritePermissions = requireWritePermissions;
+        this.behaviorOnCancel = behaviorOnCancel;
         this.applicationId = applicationId;
     }
 
@@ -41,6 +43,10 @@ public class FacebookConfig extends SocialConfig {
         this.requireWritePermissions = requireWritePermissions;
     }
 
+    public boolean isBehaviorOnCancel() {
+        return behaviorOnCancel;
+    }
+
     public String getApplicationId() {
         return applicationId;
     }
@@ -53,6 +59,7 @@ public class FacebookConfig extends SocialConfig {
         private boolean isRequireEmail = false;
         private boolean isRequireFriends = false;
         private boolean requireWritePermissions = false;
+        private boolean behaviorOnCancel = false;
         private String applicationId;
 
         public Builder setRequireEmail() {
@@ -75,6 +82,11 @@ public class FacebookConfig extends SocialConfig {
             return this;
         }
 
+        public Builder setBehaviorOnCancel() {
+            this.behaviorOnCancel = true;
+            return this;
+        }
+
         public FacebookConfig build() {
             if (TextUtils.isEmpty(applicationId)) {
                 throw new IllegalArgumentException("applicationId is empty.");
@@ -90,7 +102,7 @@ public class FacebookConfig extends SocialConfig {
             }
 
             requestOptions.add("public_profile");
-            return new FacebookConfig(requestOptions, requireWritePermissions, applicationId);
+            return new FacebookConfig(requestOptions, requireWritePermissions, behaviorOnCancel, applicationId);
         }
     }
 }

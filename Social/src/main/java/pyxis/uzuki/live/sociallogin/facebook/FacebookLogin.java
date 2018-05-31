@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -50,7 +51,7 @@ public class FacebookLogin extends SocialLogin {
 
     @Override
     public void onLogin() {
-        FacebookConfig config = (FacebookConfig) getConfig(SocialType.FACEBOOK);
+        final FacebookConfig config = (FacebookConfig) getConfig(SocialType.FACEBOOK);
 
         if (config.isRequireWritePermissions()) {
             LoginManager.getInstance().logInWithPublishPermissions(activity, config.getRequestOptions());
@@ -61,12 +62,16 @@ public class FacebookLogin extends SocialLogin {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                getUserInfo(loginResult);
+                getUserInfo();
             }
 
             @Override
             public void onCancel() {
-                responseListener.onResult(SocialType.FACEBOOK, ResultType.FAILURE, null);
+                if (config.isBehaviorOnCancel()) {
+                    getUserInfo();
+                } else {
+                    responseListener.onResult(SocialType.FACEBOOK, ResultType.FAILURE, null);
+                }
             }
 
             @Override
@@ -81,7 +86,7 @@ public class FacebookLogin extends SocialLogin {
 
     }
 
-    private void getUserInfo(LoginResult result) {
+    private void getUserInfo() {
         GraphRequest.GraphJSONObjectCallback callback = new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -94,6 +99,7 @@ public class FacebookLogin extends SocialLogin {
                 String name = RichUtils.getJSONString(object, "name");
                 String email = RichUtils.getJSONString(object, "email");
                 String gender = RichUtils.getJSONString(object, "gender");
+                String firstName = RichUtils.getJSONString(object, "first_name");
                 JSONObject data = RichUtils.getJSONObject(RichUtils.getJSONObject(object, "picture"), "data");
                 String profilePicture = RichUtils.getJSONString(data, "url");
 
@@ -103,14 +109,15 @@ public class FacebookLogin extends SocialLogin {
                 userInfoMap.put(UserInfoType.EMAIL, email);
                 userInfoMap.put(UserInfoType.PROFILE_PICTURE, profilePicture);
                 userInfoMap.put(UserInfoType.GENDER, gender);
+                userInfoMap.put(UserInfoType.FIRST_NAME, firstName);
 
                 responseListener.onResult(SocialType.FACEBOOK, ResultType.SUCCESS, userInfoMap);
             }
         };
 
-        GraphRequest request = GraphRequest.newMeRequest(result.getAccessToken(), callback);
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), callback);
         Bundle parameters = new Bundle();
-        parameters.putString("fields",  "id, name, email, gender, birthday, picture");
+        parameters.putString("fields", "id, name, email, gender, birthday, picture, first_name");
         request.setParameters(parameters);
         request.executeAsync();
     }
