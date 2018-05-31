@@ -57,6 +57,20 @@ public class NaverLogin extends SocialLogin {
 
     }
 
+    @Override
+    public void logout() {
+        logout(false);
+    }
+
+    @Override
+    public void logout(boolean clearToken) {
+        if (clearToken) {
+            OAuthLogin.getInstance().logoutAndDeleteToken(activity);
+        } else {
+            OAuthLogin.getInstance().logout(activity);
+        }
+    }
+
     private class NaverLoginHandler extends OAuthLoginHandler {
 
         @Override

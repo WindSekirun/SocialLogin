@@ -58,6 +58,17 @@ public class KakaoLogin extends SocialLogin {
             Session.getCurrentSession().removeCallback(mSessionCallback);
     }
 
+    @Override
+    public void logout() {
+        logout(false);
+    }
+
+    @Override
+    public void logout(boolean clearToken) {
+        if (Session.getCurrentSession().checkAndImplicitOpen())
+            Session.getCurrentSession().close();
+    }
+
     private class SessionCallback implements ISessionCallback {
 
         @Override
