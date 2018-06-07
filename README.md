@@ -24,6 +24,16 @@ dependencies {
 }
 ```
 
+## Available Feature
+|Service|logout|Return Data|Config|
+|---|---|---|---|
+|Facebook|O|ID, NAME, EMAIL, PROFILE_PICTURE, GENDER, FIRST_NAME|setRequireEmail, setRequireWritePermission, setApplicationId, setRequireFriends, setBehaviorOnCancel, setPictureSize|
+|Google|O|ID, NAME, EMAIL, ACCESS_TOKEN|setRequireEmail|
+|Kakao|O|ID, NICKNAME, EMAIL, PROFILE_PICTURE, EMAIL_VERIFIED, THUMBNAIL_IMAGE|setRequireEmail, setRequireNickname, setSecureResource, setRequireImage|
+|Line|X|ID, NAME, ACCESS_TOKEN|setChannelId|
+|Naver|O|ID, NAME, EMAIL, NICKNAME, GENDER, PROFILE_PICTURE, AGE, BIRTHDAY|setAuthClientId, setAuthClientSecret, setClientName|
+|Twitter|X|ID, NAME|setConsumerKey, setConsumerSecret|
+
 ## Guide
 
 ### Common
