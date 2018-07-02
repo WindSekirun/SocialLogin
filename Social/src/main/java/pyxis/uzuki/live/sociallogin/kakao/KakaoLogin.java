@@ -89,7 +89,7 @@ public class KakaoLogin extends SocialLogin {
         UserManagement.getInstance().me(config.getRequestOptions(), new MeV2ResponseCallback() {
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
-
+                responseListener.onResult(SocialType.KAKAO, ResultType.FAILURE, null);
             }
 
             @Override
