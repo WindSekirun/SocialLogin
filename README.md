@@ -161,10 +161,6 @@ private FacebookLogin facebookModule;
 ### Naver Login
 
 ### add dependencies
-[Library Jar Download](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/naver_login_library_4.1.4.jar)
-
-put this file in /libs
-
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
@@ -191,12 +187,6 @@ private NaverLogin naverModule;
 * if ```unable to merge dex``` problem is happened, just delete file in libs
 
 ### Line Login
-
-### add dependencies
-[Library Jar download](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/line-sdk-4.0.5.aar)
-
-put this file in /libs
-
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
