@@ -151,10 +151,6 @@ SocialLogin.addType(SocialType.NAVER, naverConfig);
 ```Java
 private NaverLogin naverModule;
 ```
-
-#### 기타
-* 만일 ```unable to merge dex```오류가 난다면 gradle 선언부를 지우면 됩니다.
-
 ### 라인 로그인
 
 #### Dependencies 추가
