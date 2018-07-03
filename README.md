@@ -183,6 +183,8 @@ SocialLogin.addType(SocialType.NAVER, naverConfig);
 private NaverLogin naverModule;
 ```
 ### Line Login
+
+#### add dependencies
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
