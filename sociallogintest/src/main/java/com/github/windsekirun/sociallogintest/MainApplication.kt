@@ -22,12 +22,10 @@ class MainApplication : Application() {
         SocialLogin.init(this)
         val kakaoConfig = KakaoConfig.Builder()
                 .setRequireEmail()
-                .setRequireNickname()
                 .setRequireAgeRange()
                 .setRequireBirthday()
                 .setRequireEmail()
                 .setRequireGender()
-                .setRequireImage()
                 .build()
 
         SocialLogin.addType(SocialType.KAKAO, kakaoConfig)

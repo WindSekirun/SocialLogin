@@ -26,24 +26,12 @@ public class KakaoConfig extends SocialConfig implements Serializable {
 
     public static class Builder {
         private boolean isRequireEmail = false;
-        private boolean isRequireNickname = false;
-        private boolean isRequireImage = false;
         private boolean isRequireAgeRange = false;
         private boolean isRequireBirthday = false;
         private boolean isRequireGender = false;
 
         public Builder setRequireEmail() {
             isRequireEmail = true;
-            return this;
-        }
-
-        public Builder setRequireNickname() {
-            isRequireNickname = true;
-            return this;
-        }
-
-        public Builder setRequireImage() {
-            isRequireImage = true;
             return this;
         }
 
@@ -66,17 +54,12 @@ public class KakaoConfig extends SocialConfig implements Serializable {
             // v 1.2.5 migrate with V1 -> V2
             // according to https://tinyurl.com/ycaf5yua
             ArrayList<String> requestOptions = new ArrayList<>();
+            requestOptions.add("properties.nickname");
+            requestOptions.add("properties.profile_image");
+            requestOptions.add("properties.thumbnail_image");
+
             if (isRequireEmail) {
                 requestOptions.add("kakao_account.email");
-            }
-
-            if (isRequireNickname) {
-                requestOptions.add("properties.nickname");
-            }
-
-            if (isRequireImage) {
-                requestOptions.add("properties.profile_image");
-                requestOptions.add("properties.thumbnail_image");
             }
 
             if (isRequireAgeRange) {

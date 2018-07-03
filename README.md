@@ -29,7 +29,7 @@ dependencies {
 |---|---|---|---|
 |Facebook|O|ID, NAME, EMAIL, PROFILE_PICTURE, GENDER, FIRST_NAME|setRequireEmail, setRequireWritePermission, setApplicationId, setRequireFriends, setBehaviorOnCancel, setPictureSize|
 |Google|O|ID, NAME, EMAIL, ACCESS_TOKEN|setRequireEmail|
-|Kakao|O|ID, NICKNAME, EMAIL, PROFILE_PICTURE, THUMBNAIL_IMAGE, AGE_RANGE, BIRTHDAY, GENDER, EMAIL_VERIFIED|setRequireEmail, setRequireNickname, setRequireImage, setRequireAgeRange, setRequireBirthday, setRequireGender|
+|Kakao|O|ID, NICKNAME, EMAIL, PROFILE_PICTURE, THUMBNAIL_IMAGE, AGE_RANGE, BIRTHDAY, GENDER, EMAIL_VERIFIED|setRequireEmail, setRequireAgeRange, setRequireBirthday, setRequireGender|
 |Line|X|ID, NAME, ACCESS_TOKEN|setChannelId|
 |Naver|O|ID, NAME, EMAIL, NICKNAME, GENDER, PROFILE_PICTURE, AGE, BIRTHDAY|setAuthClientId, setAuthClientSecret, setClientName|
 |Twitter|X|ID, NAME|setConsumerKey, setConsumerSecret|
