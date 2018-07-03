@@ -95,7 +95,7 @@ repositories {
 ```
 
 ```
-  implementation 'com.kakao.sdk:usermgmt:1.5.1'
+  implementation 'com.kakao.sdk:usermgmt:1.11.1'
 ```
 
 #### Add api key to AndroidManifest.xml
@@ -182,10 +182,6 @@ SocialLogin.addType(SocialType.NAVER, naverConfig);
 ```Java
 private NaverLogin naverModule;
 ```
-
-#### etc
-* if ```unable to merge dex``` problem is happened, just delete file in libs
-
 ### Line Login
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
