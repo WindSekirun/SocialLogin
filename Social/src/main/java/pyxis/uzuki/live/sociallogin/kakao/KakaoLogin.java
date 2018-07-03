@@ -114,23 +114,21 @@ public class KakaoLogin extends SocialLogin {
                 boolean isEmailVerified = false;
                 UserAccount userAccount = result.getKakaoAccount();
 
-                if (userAccount != null) {
-                    if (userAccount.hasEmail() == OptionalBoolean.TRUE) {
-                        email = userAccount.getEmail();
-                        isEmailVerified = userAccount.isEmailVerified() == OptionalBoolean.TRUE;
-                    }
+                if (userAccount != null && userAccount.hasEmail() == OptionalBoolean.TRUE) {
+                    email = userAccount.getEmail();
+                    isEmailVerified = userAccount.isEmailVerified() == OptionalBoolean.TRUE;
+                }
 
-                    if (userAccount.hasAgeRange() == OptionalBoolean.TRUE) {
-                        ageRange = userAccount.getAgeRange().getValue();
-                    }
+                if (userAccount != null && userAccount.hasAgeRange() == OptionalBoolean.TRUE) {
+                    ageRange = userAccount.getAgeRange().getValue();
+                }
 
-                    if (userAccount.hasGender() == OptionalBoolean.TRUE) {
-                        gender = userAccount.getGender().getValue();
-                    }
+                if (userAccount != null && userAccount.hasGender() == OptionalBoolean.TRUE) {
+                    gender = userAccount.getGender().getValue();
+                }
 
-                    if (userAccount.hasBirthday() == OptionalBoolean.TRUE) {
-                        birthday = userAccount.getBirthday();
-                    }
+                if (userAccount != null && userAccount.hasBirthday() == OptionalBoolean.TRUE) {
+                    birthday = userAccount.getBirthday();
                 }
 
                 userInfoMap.put(UserInfoType.EMAIL, email);
