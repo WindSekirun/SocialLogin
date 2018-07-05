@@ -64,7 +64,7 @@ repositories {
 ```
 
 ```
-  implementation 'com.kakao.sdk:usermgmt:1.5.1'
+  implementation 'com.kakao.sdk:usermgmt:1.11.1'
 ```
 
 #### AndroidManifest.xml 에 API 키 추가
@@ -129,11 +129,7 @@ private FacebookLogin facebookModule;
 
 ### 네이버 로그인
 
-### 파일 다운로드
-[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/naver_login_library_4.1.4.jar)
-
-위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
-
+#### Dependencies 추가
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
@@ -155,17 +151,9 @@ SocialLogin.addType(SocialType.NAVER, naverConfig);
 ```Java
 private NaverLogin naverModule;
 ```
-
-#### 기타
-* 만일 ```unable to merge dex```오류가 난다면 gradle 선언부를 지우면 됩니다.
-
 ### 라인 로그인
 
-### 파일 다운로드
-[Library Jar 다운로드](https://github.com/WindSekirun/SocialLogin/blob/master/Social/libs/line-sdk-4.0.5.aar)
-
-위 파일을 다운받은 뒤 libs 폴더에 넣어주세요.
-
+#### Dependencies 추가
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```

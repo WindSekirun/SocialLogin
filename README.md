@@ -20,7 +20,7 @@ allprojects {
 *app/build.gradle*
 ```
 dependencies {
-    implementation 'com.github.WindSekirun:SocialLogin:1.1.5'
+    implementation 'com.github.WindSekirun:SocialLogin:1.2.5'
 }
 ```
 
@@ -29,7 +29,7 @@ dependencies {
 |---|---|---|---|
 |Facebook|O|ID, NAME, EMAIL, PROFILE_PICTURE, GENDER, FIRST_NAME|setRequireEmail, setRequireWritePermission, setApplicationId, setRequireFriends, setBehaviorOnCancel, setPictureSize|
 |Google|O|ID, NAME, EMAIL, ACCESS_TOKEN|setRequireEmail|
-|Kakao|O|ID, NICKNAME, EMAIL, PROFILE_PICTURE, EMAIL_VERIFIED, THUMBNAIL_IMAGE|setRequireEmail, setRequireNickname, setSecureResource, setRequireImage|
+|Kakao|O|ID, NICKNAME, EMAIL, PROFILE_PICTURE, THUMBNAIL_IMAGE, AGE_RANGE, BIRTHDAY, GENDER, EMAIL_VERIFIED|setRequireEmail, setRequireAgeRange, setRequireBirthday, setRequireGender|
 |Line|X|ID, NAME, ACCESS_TOKEN|setChannelId|
 |Naver|O|ID, NAME, EMAIL, NICKNAME, GENDER, PROFILE_PICTURE, AGE, BIRTHDAY|setAuthClientId, setAuthClientSecret, setClientName|
 |Twitter|X|ID, NAME|setConsumerKey, setConsumerSecret|
@@ -161,7 +161,6 @@ private FacebookLogin facebookModule;
 ### Naver Login
 
 ### add dependencies
-
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```
@@ -183,11 +182,9 @@ SocialLogin.addType(SocialType.NAVER, naverConfig);
 ```Java
 private NaverLogin naverModule;
 ```
-
 ### Line Login
 
-### add dependencies
-
+#### add dependencies
 ```
 implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 ```

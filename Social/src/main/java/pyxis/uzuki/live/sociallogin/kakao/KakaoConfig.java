@@ -15,64 +15,66 @@ import pyxis.uzuki.live.sociallogin.impl.SocialConfig;
 
 public class KakaoConfig extends SocialConfig implements Serializable {
     private ArrayList<String> requestOptions;
-    private boolean isSecureResource = false;
 
-    private KakaoConfig(ArrayList<String> requestOptions, boolean isSecureResource) {
+    private KakaoConfig(ArrayList<String> requestOptions) {
         this.requestOptions = requestOptions;
-        this.isSecureResource = isSecureResource;
     }
 
     public ArrayList<String> getRequestOptions() {
         return requestOptions;
     }
 
-    public boolean isSecureResource() {
-        return isSecureResource;
-    }
-
     public static class Builder {
         private boolean isRequireEmail = false;
-        private boolean isRequireNickname = false;
-        private boolean isSecureResource = false;
-        private boolean isRequireImage = false;
+        private boolean isRequireAgeRange = false;
+        private boolean isRequireBirthday = false;
+        private boolean isRequireGender = false;
 
         public Builder setRequireEmail() {
             isRequireEmail = true;
             return this;
         }
 
-        public Builder setRequireNickname() {
-            isRequireNickname = true;
+        public Builder setRequireAgeRange() {
+            isRequireAgeRange = true;
             return this;
         }
 
-        public Builder setSecureResource() {
-            isSecureResource = true;
+        public Builder setRequireBirthday() {
+            isRequireBirthday = true;
             return this;
         }
 
-        public Builder setRequireImage() {
-            isRequireImage = true;
+        public Builder setRequireGender() {
+            isRequireGender = true;
             return this;
         }
 
         public KakaoConfig build() {
+            // v 1.2.5 migrate with V1 -> V2
+            // according to https://tinyurl.com/ycaf5yua
             ArrayList<String> requestOptions = new ArrayList<>();
+            requestOptions.add("properties.nickname");
+            requestOptions.add("properties.profile_image");
+            requestOptions.add("properties.thumbnail_image");
+
             if (isRequireEmail) {
-                requestOptions.add("kaccount_email");
-                requestOptions.add("kaccount_email_verified");
+                requestOptions.add("kakao_account.email");
             }
 
-            if (isRequireNickname) {
-                requestOptions.add("nickname");
+            if (isRequireAgeRange) {
+                requestOptions.add("kakao_account.age_range");
             }
 
-            if (isRequireImage) {
-                requestOptions.add("profile_image");
-                requestOptions.add("thumbnail_image");
+            if (isRequireBirthday) {
+                requestOptions.add("kakao_account.birthday");
             }
 
-            return new KakaoConfig(requestOptions, isSecureResource);
+            if (isRequireGender) {
+                requestOptions.add("kakao_account.gender");
+            }
+
+            return new KakaoConfig(requestOptions);
         }
     }
 }

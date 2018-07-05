@@ -1,1 +1,1 @@
-include ':Social'
+include ':Social', ':sociallogintest'

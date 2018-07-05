@@ -2,7 +2,6 @@ package pyxis.uzuki.live.sociallogin.kakao;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.kakao.auth.AuthType;
@@ -10,8 +9,10 @@ import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.MeResponseCallback;
-import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.usermgmt.callback.MeV2ResponseCallback;
+import com.kakao.usermgmt.response.MeV2Response;
+import com.kakao.usermgmt.response.model.UserAccount;
+import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
 
 import java.util.HashMap;
@@ -82,44 +83,62 @@ public class KakaoLogin extends SocialLogin {
         }
     }
 
-    void requestMe() {
+    private void requestMe() {
         KakaoConfig config = (KakaoConfig) getConfig(SocialType.KAKAO);
 
-        UserManagement.requestMe(new MeResponseCallback() {
-            @Override
-            public void onFailure(ErrorResult errorResult) {
-                responseListener.onResult(SocialType.KAKAO, ResultType.FAILURE, null);
-            }
-
+        UserManagement.getInstance().me(config.getRequestOptions(), new MeV2ResponseCallback() {
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
                 responseListener.onResult(SocialType.KAKAO, ResultType.FAILURE, null);
             }
 
             @Override
-            public void onSuccess(UserProfile userProfile) {
-                String id = String.valueOf(userProfile.getId());
-                String nickname = !TextUtils.isEmpty(userProfile.getNickname()) ? userProfile.getNickname() : "";
-                String email = userProfile.getEmail();
-                String profilePicture = !TextUtils.isEmpty(userProfile.getProfileImagePath()) ? userProfile.getProfileImagePath() : "";
-                String thumbnailPicture = !TextUtils.isEmpty(userProfile.getThumbnailImagePath()) ? userProfile.getThumbnailImagePath() : "";
-                boolean isEmailVerified = userProfile.getEmailVerified();
+            public void onSuccess(MeV2Response result) {
+                // default value
+                String id = String.valueOf(result.getId());
+                String nickname = result.getNickname();
+                String profilePicture = result.getProfileImagePath();
+                String thumbnailPicture = result.getThumbnailImagePath();
 
                 Map<UserInfoType, String> userInfoMap = new HashMap<>();
                 userInfoMap.put(UserInfoType.ID, id);
                 userInfoMap.put(UserInfoType.NICKNAME, nickname);
-                userInfoMap.put(UserInfoType.EMAIL, email);
                 userInfoMap.put(UserInfoType.PROFILE_PICTURE, profilePicture);
-                userInfoMap.put(UserInfoType.EMAIL_VERIFIED, String.valueOf(isEmailVerified));
                 userInfoMap.put(UserInfoType.THUMBNAIL_IMAGE, thumbnailPicture);
+
+                // optional value
+                String email = "";
+                String gender = "";
+                String ageRange = "";
+                String birthday = "";
+                boolean isEmailVerified = false;
+                UserAccount userAccount = result.getKakaoAccount();
+
+                if (userAccount != null && userAccount.hasEmail() == OptionalBoolean.TRUE) {
+                    email = userAccount.getEmail();
+                    isEmailVerified = userAccount.isEmailVerified() == OptionalBoolean.TRUE;
+                }
+
+                if (userAccount != null && userAccount.hasAgeRange() == OptionalBoolean.TRUE) {
+                    ageRange = userAccount.getAgeRange().getValue();
+                }
+
+                if (userAccount != null && userAccount.hasGender() == OptionalBoolean.TRUE) {
+                    gender = userAccount.getGender().getValue();
+                }
+
+                if (userAccount != null && userAccount.hasBirthday() == OptionalBoolean.TRUE) {
+                    birthday = userAccount.getBirthday();
+                }
+
+                userInfoMap.put(UserInfoType.EMAIL, email);
+                userInfoMap.put(UserInfoType.EMAIL_VERIFIED, String.valueOf(isEmailVerified));
+                userInfoMap.put(UserInfoType.GENDER, gender);
+                userInfoMap.put(UserInfoType.AGE_RANGE, ageRange);
+                userInfoMap.put(UserInfoType.BIRTHDAY, birthday);
 
                 responseListener.onResult(SocialType.KAKAO, ResultType.SUCCESS, userInfoMap);
             }
-
-            @Override
-            public void onNotSignedUp() {
-
-            }
-        }, config.getRequestOptions(), config.isSecureResource());
+        });
     }
 }
