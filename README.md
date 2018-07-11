@@ -1,3 +1,6 @@
+## Deprecated
+On 2018. 07. 11, this library has deprecated. Please use enhance version of SocialLogin, [RxSocialLogin](https://github.com/WindSekirun/RxSocialLogin)
+
 ## SocialLogin [![](https://jitpack.io/v/WindSekirun/SocialLogin.svg)](https://jitpack.io/#WindSekirun/SocialLogin)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
